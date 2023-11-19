@@ -21,6 +21,26 @@
 local S = minetest.get_translator("markdown_poster")
 local FS = function(...) return minetest.formspec_escape(S(...)) end
 
+local function can_edit_poster(player, pos)
+	if minetest.check_player_privs(player, "protection_bypass") then return true end
+
+	local meta = minetest.get_meta(pos)
+	local owner = meta:get_string("owner")
+
+	if not owner or owner == "" or owner == player:get_player_name() then return true
+	else return false end
+end
+
+local old_is_protected = minetest.is_protected
+function minetest.is_protected(pos, name)
+	local can_edit_poster = can_edit_poster(minetest.get_player_by_name(name), pos)
+	if can_edit_poster == nil then
+		return old_is_protected(pos, name)
+	else
+		return not can_edit_poster
+	end
+end
+
 local function display_poster(pos, node, player)
 	local meta = minetest.get_meta(pos)
 	local font = font_api.get_font(meta:get_string("font"))
@@ -108,6 +128,17 @@ signs_api.register_sign("markdown_poster", "poster", {
 				 "signs_poster_sides.png", "signs_poster.png"},
 		inventory_image = "signs_poster_inventory.png",
 		groups = {dig_immediate = 3},
+
+		on_construct = function(pos)
+			local meta = minetest.get_meta(pos)
+			meta:set_string("owner", "")
+		end,
+
+		after_place_node = function(pos, placer)
+			local meta = minetest.get_meta(pos)
+			meta:set_string("owner", placer:get_player_name())
+		end,
+
 		on_rightclick = display_poster
 	}
 })
