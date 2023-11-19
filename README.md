@@ -1,6 +1,6 @@
 # Markdown Poster
 
-![screenshot](screenshot.png)
+![screenshot](https://content.minetest.net/thumbnails/2/5563ea6051.webp)
 
 This mod adds a markdown-capable variant to the poster from display modpack.
 
