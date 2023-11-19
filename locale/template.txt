@@ -1,0 +1,14 @@
+# textdomain: markdown_poster
+Close=
+Edit=
+Title=
+Text=
+Title font=
+Write=
+(right-click to read more text)=
+Wooden sign=
+Wooden long sign=
+Wooden direction sign=
+Markdown Poster=
+Small label=
+Label=
