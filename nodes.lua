@@ -33,12 +33,13 @@ end
 
 local old_is_protected = minetest.is_protected
 function minetest.is_protected(pos, name)
-	local can_edit_poster = can_edit_poster(minetest.get_player_by_name(name), pos)
-	if can_edit_poster == nil then
-		return old_is_protected(pos, name)
-	else
-		return not can_edit_poster
+	local player = minetest.get_player_by_name(name)
+	if player then
+		local can_edit_poster = can_edit_poster(player, pos)
+		if can_edit_poster ~= nil then return not can_edit_poster end
 	end
+
+	return old_is_protected(pos, name)
 end
 
 local function display_poster(pos, node, player)
