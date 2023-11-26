@@ -50,7 +50,7 @@ local function display_poster(pos, node, player)
 	local titletexture = font:render(meta:get_string("display_text"),
 		font:get_height() * 8.4, font:get_height(), {lines = 1, color = "#fff"})
 
-	formspec = string.format([[
+	local formspec = string.format([[
 		size[9,12]
 		image[1,0;8.4,2;%s]
 		%s ]],
