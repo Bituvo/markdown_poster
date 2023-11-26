@@ -24,8 +24,11 @@ local FS = function(...) return minetest.formspec_escape(S(...)) end
 local function can_edit_poster(player, pos)
 	if minetest.check_player_privs(player, "protection_bypass") then return true end
 
+	local node = minetest.get_node(pos)
 	local meta = minetest.get_meta(pos)
 	local owner = meta:get_string("owner")
+
+	if node.name ~= "markdown_poster:poster" then return nil end
 
 	if not owner or owner == "" or owner == player:get_player_name() then return true
 	else return false end
